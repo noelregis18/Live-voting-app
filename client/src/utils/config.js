@@ -1,5 +1,5 @@
 // API configuration
-export const API_URL = 'http://localhost:5000/api';
+export const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
 // Default request timeout
 export const REQUEST_TIMEOUT = 10000; // 10 seconds

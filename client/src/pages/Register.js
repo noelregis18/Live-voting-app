@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import AuthContext from '../context/AuthContext';
-import { FaUserPlus, FaUserAlt } from 'react-icons/fa';
+import { FaUserAlt } from 'react-icons/fa';
 
 const Register = () => {
   const { register, isAuthenticated, error, clearError, login } = useContext(AuthContext);

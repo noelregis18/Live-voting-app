@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { FaVoteYea, FaEdit, FaTrash, FaPlus, FaCheck, FaClock, FaExclamationTriangle } from 'react-icons/fa';
 import AuthContext from '../context/AuthContext';
-
-// API URL
-const API_URL = 'http://localhost:5000/api';
+import { API_URL } from '../utils/config';
 
 // Mock polls for when the API fails
 const mockUserPolls = [

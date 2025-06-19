@@ -4,12 +4,10 @@ import axios from 'axios';
 import { 
   FaVoteYea, FaChartPie, FaUser, FaClock, 
   FaExclamationTriangle, FaSignInAlt,
-  FaPlusCircle, FaCheck, FaThumbsUp, FaTrash
+  FaPlusCircle, FaThumbsUp, FaTrash
 } from 'react-icons/fa';
 import AuthContext from '../context/AuthContext';
-
-// API URL
-const API_URL = 'http://localhost:5000/api';
+import { API_URL } from '../utils/config';
 
 // Create an axios instance with timeout
 const api = axios.create({
@@ -101,7 +99,6 @@ const Home = () => {
   const [error, setError] = useState(null);
   const [retry, setRetry] = useState(false);
   const { isAuthenticated, user } = useContext(AuthContext);
-  const [serverStatus, setServerStatus] = useState(null);
   const [voteMessage, setVoteMessage] = useState(localStorage.getItem('voteSuccess'));
   const navigate = useNavigate();
 
@@ -140,13 +137,11 @@ const Home = () => {
   useEffect(() => {
     const checkServerHealth = async () => {
       try {
-        const healthCheck = await axios.get('http://localhost:5000/health', { timeout: 5000 });
+        const healthCheck = await axios.get(`${API_URL.replace('/api', '')}/health`, { timeout: 5000 });
         console.log('Server health check:', healthCheck.data);
-        setServerStatus(healthCheck.data);
         return true;
       } catch (healthErr) {
         console.error('Server health check failed:', healthErr.message);
-        setServerStatus({ status: 'error', mode: 'unknown' });
         return false;
       }
     };
@@ -244,11 +239,6 @@ const Home = () => {
 
   const navigateToCreatePollWithTemplate = (template) => {
     localStorage.setItem('pollTemplate', JSON.stringify(template));
-  };
-
-  const getUserId = () => {
-    // Helper to get user id or fallback for mock
-    return (user && user.id) || 'mock-user-id';
   };
 
   const handleVoteInline = async (pollId, optionIndex) => {

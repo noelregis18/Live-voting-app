@@ -318,7 +318,6 @@ const PollDetail = () => {
   }
 
   const isActive = isPollActive(poll.expiresAt);
-  const chartData = getChartData();
 
   return (
     <div className="poll-detail-page">

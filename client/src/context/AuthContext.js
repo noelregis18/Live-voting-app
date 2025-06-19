@@ -1,8 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
-
-// Base API URL - make sure it's set correctly
-const API_URL = 'http://localhost:5000/api';
+import { API_URL } from '../utils/config';
 
 // Create an axios instance with timeout and retries
 const api = axios.create({
