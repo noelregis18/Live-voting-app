@@ -171,49 +171,6 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticated(true);
       setError(null);
       return true;
-      
-      // Original code below is never reached but kept for reference
-      // Special case for test account
-      if (formData.email === 'test@example.com' && formData.password === 'password123') {
-        console.log('Using test account for registration');
-        // Skip validation for test account
-      } else {
-        // Additional validation before sending to server
-        if (!formData.username || formData.username.trim() === '') {
-          setError('Username is required');
-          return false;
-        }
-        
-        if (!formData.email || formData.email.trim() === '') {
-          setError('Email address is required');
-          return false;
-        }
-        
-        if (!formData.password || formData.password.trim() === '') {
-          setError('Password is required');
-          return false;
-        }
-        
-        if (formData.password && formData.password.length < 6) {
-          setError('Password must be at least 6 characters');
-          return false;
-        }
-      }
-      
-      const res = await api.post('/auth/register', formData);
-      
-      if (res.data && res.data.success && res.data.token) {
-        localStorage.setItem('token', res.data.token);
-        setToken(res.data.token);
-        setUser(res.data.user);
-        setIsAuthenticated(true);
-        setError(null);
-        return true;
-      } else {
-        console.error('Invalid registration response:', res.data);
-        setError('Registration failed: Invalid server response');
-        return false;
-      }
     } catch (err) {
       console.error('Registration error:', err);
       if (err.response?.status === 400 && 
@@ -275,47 +232,6 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticated(true);
       setError(null);
       return true;
-      
-      /* Original code (kept for reference but not executed)
-      // Normal login flow for non-test users
-      // Validate login inputs
-      if (!formData.email || formData.email.trim() === '') {
-        setError('Email address is required');
-        return false;
-      }
-      
-      if (!formData.password || formData.password.trim() === '') {
-        setError('Password is required');
-        return false;
-      }
-      
-      const res = await api.post('/auth/login', formData);
-      
-      if (res.data && res.data.success && res.data.token) {
-        localStorage.setItem('token', res.data.token);
-        setToken(res.data.token);
-        setUser(res.data.user);
-        setIsAuthenticated(true);
-        setError(null);
-        return true;
-      } else {
-        console.error('Invalid login response:', res.data);
-        // FALLBACK: If server response is invalid, use test account
-        console.log('Falling back to test account due to invalid server response');
-        const mockToken = 'mock-token-for-test-account-fallback';
-        localStorage.setItem('token', mockToken);
-        const mockUser = {
-          _id: 'mock-user-1',
-          username: 'TestUser',
-          email: 'test@example.com'
-        };
-        setToken(mockToken);
-        setUser(mockUser);
-        setIsAuthenticated(true);
-        setError(null);
-        return true;
-      }
-      */
     } catch (err) {
       console.error('Login error:', err);
       if (err.response?.data?.message?.includes('token') || 
